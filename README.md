@@ -10,7 +10,8 @@ To achieve that, you will consume [Nomics’ API](http://docs.nomics.com). You c
 ## Required features
 
 #### Currency Converter
-Convert an amount from one currency to another:
+Convert an amount from one currency to another.
+
 * As a user, I want to enter the amount, the currency codes that I would like to convert from and to. Clicking on the opposite arrows icon will switch the values of the From and To fields. Clicking on the Convert button will show the conversion result and get the exchange rate history.
 * Every conversion operation should be saved. The application should keep the conversion history. Without using a backend service, find out a way to store the history in case the user closes and opens the application again or refreshes the page.
 
@@ -56,8 +57,8 @@ Please use the following technologies:
 * Angular (latest)
 * SCSS/SASS/CSS/HTML
 * Git version control (descriptive commit messages)
-* BONUS - Angular Material (otherwise, any other UI framework that you feel comfortrable working with)
 * BONUS - Follow the [Angular Styleguide](https://angular.io/guide/styleguide)
+* BONUS - Angular Material (otherwise, any other UI framework that you feel comfortable working with)
 * BONUS - Follow the [BEM](http://getbem.com/) methodology for CSS
 
 #### Getting started and 
@@ -70,7 +71,7 @@ git checkout -B develop
 Make sure to commit your changes to the `develop` branch only.
 
 
-Start a new Angular project under a `client` folder using the Angluar CLI:
+Start a new Angular project under a `client` folder using the Angular CLI:
 
 ```
 ng new client --style scss --skip-git --directory client
