@@ -1,3 +1,27 @@
-<p>
-  convert-currency works!
-</p>
+<div class="centered container">
+  <div class="content">
+    <h1>I want to convert</h1>
+
+    <mat-form-field>
+      <input matInput type="number" placeholder="From" [(ngModel)]="fromAmount">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" placeholder="From" [(ngModel)]="fromCurrency">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="invertCurrencies()"><mat-icon>compare_arrows</mat-icon></button>
+
+    <mat-form-field>
+      <input matInput type="text" placeholder="To" [(ngModel)]="toCurrency" readonly>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+  </div>
+
+  <div class="content" *ngIf="toAmount">
+    <p>{{fromAmount}} {{fromCurrency}} = {{toAmount}} {{toCurrency}}</p>
+    <p>1 {{fromCurrency}} = {{rate}} {{toCurrency}}</p>
+    <p>1 {{toCurrency}} = {{inverseRate}} {{fromCurrency}}</p>
+  </div>
+</div>
