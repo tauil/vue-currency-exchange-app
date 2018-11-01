@@ -20,34 +20,38 @@ export class ConvertService {
     return new Observable((observer) => {
       this.getCurrencies().subscribe(
         (response: Array<any>) => {
-          let rate = response.filter((conversion) => (conversion["currency"] === fromCurrency))[0]["rate"];
-
-          let conversion = {
-            fromCurrency: fromCurrency,
-            toCurrency: toCurrency,
-            rate: rate,
-            inverseRate: (1 / rate),
-            initialAmount: amount,
-            finalAmount: (amount * rate),
-            date: (new Date).toISOString()
-          };
-
-          let conversions = this.cookieService.get('conversions');
-          if (conversions.length > 0) {
-            conversions = JSON.parse(conversions);
-          } else {
-            conversions = [];
-          }
-          conversions.push(conversion);
-
-          this.cookieService.set('conversions', JSON.stringify(conversions));
-
-          observer.next(conversion);
+          observer.next(this.processConversions(response, amount, fromCurrency, toCurrency));
         },
         (error) => {
           observer.error(error);
         }
       );
     });
+  }
+
+  processConversions(response: Array<any>, amount:number, fromCurrency:string, toCurrency:string) {
+    let rate = response.filter((conversion) => (conversion["currency"] === fromCurrency))[0]["rate"];
+
+    let conversion = {
+      fromCurrency: fromCurrency,
+      toCurrency: toCurrency,
+      rate: rate,
+      inverseRate: (1 / rate),
+      initialAmount: amount,
+      finalAmount: (amount * rate),
+      date: (new Date).toISOString()
+    };
+
+    let conversions = this.loadConversions();
+    conversions.push(conversion);
+    this.cookieService.set('conversions', JSON.stringify(conversions));
+
+    return conversion;
+  }
+
+  loadConversions() {
+    let conversions = this.cookieService.get('conversions');
+    if (conversions.length > 0) return JSON.parse(conversions);
+    return [];
   }
 }
