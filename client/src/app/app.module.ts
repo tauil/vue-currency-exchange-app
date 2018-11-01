@@ -8,6 +8,7 @@ import { MatToolbarModule,
          MatInputModule,
          MatButtonModule,
          MatTabsModule,
+         MatTableModule,
          MatIconModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -39,6 +40,7 @@ import { ConversionHistoryComponent } from './conversion-history/conversion-hist
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
+    MatTableModule,
     MatIconModule
   ],
   providers: [AuthService, ConvertService, CookieService],

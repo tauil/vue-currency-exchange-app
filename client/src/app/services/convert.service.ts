@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service'
+import { CookieService } from 'ngx-cookie-service';
+import { Conversion } from '../interfaces/conversion';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class ConvertService {
   processConversions(response: Array<any>, amount:number, fromCurrency:string, toCurrency:string) {
     let rate = response.filter((conversion) => (conversion["currency"] === fromCurrency))[0]["rate"];
 
-    let conversion = {
+    let conversion: Conversion = {
       fromCurrency: fromCurrency,
       toCurrency: toCurrency,
       rate: rate,
@@ -42,7 +43,7 @@ export class ConvertService {
       date: (new Date).toISOString()
     };
 
-    let conversions = this.loadConversions();
+    let conversions: Conversion[] = this.loadConversions();
     conversions.push(conversion);
     this.cookieService.set('conversions', JSON.stringify(conversions));
 
