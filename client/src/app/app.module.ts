@@ -3,7 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { MatToolbarModule,
+         MatCardModule,
+         MatInputModule,
+         MatButtonModule,
+         MatTabsModule,
+         MatIconModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CookieService } from 'ngx-cookie-service'
@@ -14,12 +19,14 @@ import { ConvertService } from './services/convert.service';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { ConvertCurrencyComponent } from './convert-currency/convert-currency.component';
+import { ConversionHistoryComponent } from './conversion-history/conversion-history.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    ConvertCurrencyComponent
+    ConvertCurrencyComponent,
+    ConversionHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +38,7 @@ import { ConvertCurrencyComponent } from './convert-currency/convert-currency.co
     MatCardModule,
     MatInputModule,
     MatButtonModule,
+    MatTabsModule,
     MatIconModule
   ],
   providers: [AuthService, ConvertService, CookieService],

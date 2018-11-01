@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthComponent } from './auth/auth.component';
 import { ConvertCurrencyComponent } from './convert-currency/convert-currency.component';
+import { ConversionHistoryComponent } from './conversion-history/conversion-history.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,12 @@ const routes: Routes = [
     path: 'convert',
     component: ConvertCurrencyComponent,
     data: { title: 'Convert Currency' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'history',
+    component: ConversionHistoryComponent,
+    data: { title: 'Conversion History' },
     canActivate: [AuthGuard]
   },
   { path: '',

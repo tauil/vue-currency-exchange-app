@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ConvertService } from '../services/convert.service';
-import { CookieService } from 'ngx-cookie-service'
 
 @Component({
   selector: 'app-convert-currency',
@@ -15,12 +14,10 @@ export class ConvertCurrencyComponent implements OnInit {
   toAmount: number;
   rate: number;
   inverseRate: number;
-  conversions: Array<any>;
 
-  constructor(public convertService: ConvertService, private cookieService: CookieService) { }
+  constructor(public convertService: ConvertService) { }
 
   ngOnInit() {
-    this.loadHistory();
   }
 
   invertCurrencies() {
@@ -35,17 +32,11 @@ export class ConvertCurrencyComponent implements OnInit {
         this.toAmount = result["finalAmount"];
         this.rate = result["rate"];
         this.inverseRate = result["inverseRate"];
-        this.loadHistory();
       },
       error: err => console.error('Observer got an error: ' + err),
       complete: () => console.log('Observer got a complete notification'),
     };
     this.convertService.convert(this.fromAmount, this.fromCurrency, this.toCurrency).subscribe(myObserver)
-  }
-
-  loadHistory() {
-    let rawHistoryData = this.cookieService.get('conversions');
-    this.conversions = (rawHistoryData.length > 0) ? JSON.parse(rawHistoryData) : [];
   }
 
 }
