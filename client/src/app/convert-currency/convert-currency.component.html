@@ -13,7 +13,7 @@
     <button mat-raised-button color="primary" (click)="invertCurrencies()"><mat-icon>compare_arrows</mat-icon></button>
 
     <mat-form-field>
-      <input matInput type="text" placeholder="To" [(ngModel)]="toCurrency" readonly>
+      <input matInput type="text" placeholder="To" [(ngModel)]="toCurrency">
     </mat-form-field>
 
     <button mat-raised-button color="primary" (click)="convert()">Convert</button>
@@ -23,5 +23,16 @@
     <p>{{fromAmount}} {{fromCurrency}} = {{toAmount}} {{toCurrency}}</p>
     <p>1 {{fromCurrency}} = {{rate}} {{toCurrency}}</p>
     <p>1 {{toCurrency}} = {{inverseRate}} {{fromCurrency}}</p>
+  </div>
+
+  <div class="content">
+    <p *ngFor="let conversion of conversions">
+      Date: {{conversion.date | date: 'short'}}<br />
+      From Currency: {{conversion.fromCurrency}}<br />
+      To Currency: {{conversion.toCurrency}}<br />
+      Rate: {{conversion.rate}}<br />
+      Initial Amount: {{conversion.initialAmount | currency: conversion.fromCurrency}}<br />
+      Final Amount: {{conversion.finalAmount | currency: conversion.toCurrency}}
+    </p>
   </div>
 </div>
