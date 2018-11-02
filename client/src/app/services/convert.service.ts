@@ -33,6 +33,11 @@ export class ConvertService {
   processConversions(response: Array<any>, amount:number, fromCurrency:string, toCurrency:string) {
     let rate = response.filter((conversion) => (conversion["currency"] === fromCurrency))[0]["rate"];
 
+    if (toCurrency !== 'USD') {
+      let rate2 = response.filter((conversion) => (conversion["currency"] === toCurrency))[0]["rate"];
+      rate = (rate * (1 / rate2));
+    }
+
     let conversion: Conversion = {
       fromCurrency: fromCurrency,
       toCurrency: toCurrency,
