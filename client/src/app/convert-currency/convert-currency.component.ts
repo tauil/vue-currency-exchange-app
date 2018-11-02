@@ -15,12 +15,13 @@ export class ConvertCurrencyComponent implements OnInit {
   finalAmount: number;
   rate: number;
   inverseRate: number;
+  isLoading: boolean = false;
 
   constructor(public convertService: ConvertService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      console.log(params)
+      if (!(params.hasOwnProperty('amount') && params.hasOwnProperty('from') && params.hasOwnProperty('to'))) return;
       this.initialAmount = params['amount'];
       this.fromCurrency = params['from'];
       this.toCurrency = params['to'];
@@ -35,11 +36,13 @@ export class ConvertCurrencyComponent implements OnInit {
   }
 
   convert() {
+    this.isLoading = true;
     const myObserver = {
       next: result => {
         this.finalAmount = result["finalAmount"];
         this.rate = result["rate"];
         this.inverseRate = result["inverseRate"];
+        this.isLoading = false;
       },
       error: err => console.error('Observer got an error: ' + err),
       complete: () => console.log('Observer got a complete notification'),

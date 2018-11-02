@@ -45,14 +45,24 @@ export class ConvertService {
 
     let conversions: Conversion[] = this.loadConversions();
     conversions.push(conversion);
-    this.cookieService.set('conversions', JSON.stringify(conversions));
+    this.saveConversions(conversions);
 
     return conversion;
   }
 
-  loadConversions() {
+  saveConversions(conversions) {
+    this.cookieService.set('conversions', JSON.stringify(conversions));
+  }
+
+  loadConversions(): Conversion[] {
     let conversions = this.cookieService.get('conversions');
     if (conversions.length > 0) return JSON.parse(conversions);
     return [];
+  }
+
+  deleteConversion(conversion) {
+    let conversions = this.loadConversions()
+    conversions = conversions.filter((c) => c["date"] !== conversion["date"]);
+    this.saveConversions(conversions);
   }
 }

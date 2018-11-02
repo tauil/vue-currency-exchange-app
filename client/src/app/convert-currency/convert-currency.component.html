@@ -3,23 +3,25 @@
     <h1>I want to convert</h1>
 
     <mat-form-field>
-      <input matInput type="number" placeholder="From" [(ngModel)]="initialAmount">
+      <input matInput type="number" placeholder="Amount" [(ngModel)]="initialAmount" [readonly]="isLoading">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="text" placeholder="From" [(ngModel)]="fromCurrency">
+      <input matInput type="text" placeholder="From" [(ngModel)]="fromCurrency" [readonly]="isLoading">
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="invertCurrencies()"><mat-icon>compare_arrows</mat-icon></button>
+    <button mat-raised-button color="primary" (click)="invertCurrencies()" [disabled]="isLoading"><mat-icon>compare_arrows</mat-icon></button>
 
     <mat-form-field>
-      <input matInput type="text" placeholder="To" [(ngModel)]="toCurrency">
+      <input matInput type="text" placeholder="To" [(ngModel)]="toCurrency" [readonly]="isLoading">
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+    <button mat-raised-button color="primary" (click)="convert()" [disabled]="isLoading">Convert</button>
   </div>
 
-  <div class="content" *ngIf="finalAmount">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <div class="content" *ngIf="finalAmount && !isLoading">
     <p>{{initialAmount}} {{fromCurrency}} = {{finalAmount}} {{toCurrency}}</p>
     <p>1 {{fromCurrency}} = {{rate}} {{toCurrency}}</p>
     <p>1 {{toCurrency}} = {{inverseRate}} {{fromCurrency}}</p>

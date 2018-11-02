@@ -1,0 +1,15 @@
+tr {
+  td.mat-column-actions {
+    button {
+      visibility: hidden;
+    }
+  }
+
+  &:hover {
+    td.mat-column-actions {
+      button {
+        visibility: visible;
+      }
+    }
+  }
+}
