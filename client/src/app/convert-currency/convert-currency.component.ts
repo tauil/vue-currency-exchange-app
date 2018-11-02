@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConvertService } from '../services/convert.service';
 import { ActivatedRoute } from '@angular/router';
+import { Conversion } from '../interfaces/conversion';
 
 @Component({
   selector: 'app-convert-currency',
@@ -12,10 +13,10 @@ export class ConvertCurrencyComponent implements OnInit {
   fromCurrency: string;
   toCurrency: string = 'USD'; // nomics only provides exchange to USD.
   initialAmount: number;
-  finalAmount: number;
   rate: number;
   inverseRate: number;
   isLoading: boolean = false;
+  conversion: Conversion;
 
   constructor(public convertService: ConvertService, private route: ActivatedRoute) { }
 
@@ -39,9 +40,7 @@ export class ConvertCurrencyComponent implements OnInit {
     this.isLoading = true;
     const myObserver = {
       next: result => {
-        this.finalAmount = result["finalAmount"];
-        this.rate = result["rate"];
-        this.inverseRate = result["inverseRate"];
+        this.conversion = result;
         this.isLoading = false;
       },
       error: err => console.error('Observer got an error: ' + err),

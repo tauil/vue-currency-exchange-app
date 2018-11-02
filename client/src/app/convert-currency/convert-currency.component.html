@@ -21,9 +21,9 @@
 
   <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-  <div class="content" *ngIf="finalAmount && !isLoading">
-    <p>{{initialAmount}} {{fromCurrency}} = {{finalAmount}} {{toCurrency}}</p>
-    <p>1 {{fromCurrency}} = {{rate}} {{toCurrency}}</p>
-    <p>1 {{toCurrency}} = {{inverseRate}} {{fromCurrency}}</p>
+  <div class="content" *ngIf="conversion && !isLoading">
+    <p>{{conversion.initialAmount}} {{conversion.fromCurrency}} = {{conversion.finalAmount}} {{conversion.toCurrency}}</p>
+    <p>1 {{conversion.fromCurrency}} = {{conversion.rate}} {{conversion.toCurrency}}</p>
+    <p>1 {{conversion.toCurrency}} = {{conversion.inverseRate}} {{conversion.fromCurrency}}</p>
   </div>
 </div>
