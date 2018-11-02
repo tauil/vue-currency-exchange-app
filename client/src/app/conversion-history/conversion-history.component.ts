@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service'
 import { ConvertService } from '../services/convert.service';
 import { Router } from '@angular/router';
 
@@ -13,7 +12,7 @@ export class ConversionHistoryComponent implements OnInit {
   conversions: Array<any>;
   displayedColumns: string[] = ['date', 'event', 'actions'];
 
-  constructor(private cookieService: CookieService, private router: Router, public convertService: ConvertService) { }
+  constructor(private router: Router, public convertService: ConvertService) { }
 
   ngOnInit() {
     this.loadHistory();
@@ -29,8 +28,7 @@ export class ConversionHistoryComponent implements OnInit {
   }
 
   loadHistory() {
-    let rawHistoryData = this.cookieService.get('conversions');
-    this.conversions = (rawHistoryData.length > 0) ? JSON.parse(rawHistoryData) : [];
+    this.conversions = this.convertService.loadConversions();
   }
 
 }
