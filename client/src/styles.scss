@@ -25,3 +25,11 @@ app-auth {
     align-items: center;
   }
 }
+
+.flex {
+  display: flex;
+
+  .flex-child {
+    flex: 1;
+  }
+}

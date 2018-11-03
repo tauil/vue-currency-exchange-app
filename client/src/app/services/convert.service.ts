@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Conversion } from '../interfaces/conversion';
@@ -9,12 +9,15 @@ import { Conversion } from '../interfaces/conversion';
 })
 export class ConvertService {
 
-  api:string = 'https://api.nomics.com/v1/exchange-rates?key=e180d3d7dcf22df397ef0d91b5de1869';
+  host:string = 'https://api.nomics.com';
+  apiKey:string = 'e180d3d7dcf22df397ef0d91b5de1869';
+  exchangeRateEndpoint:string = '/v1/exchange-rates';
+  exchangeRatesHistoryEndpoint:string = '/v1/exchange-rates/history';
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getCurrencies() {
-    return this.http.get(this.api);
+    return this.http.get(this.host + this.exchangeRateEndpoint, { params: { key: this.apiKey } });
   }
 
   convert(amount, fromCurrency, toCurrency):Observable<any> {
@@ -69,5 +72,49 @@ export class ConvertService {
     let conversions = this.loadConversions()
     conversions = conversions.filter((c) => c["date"] !== conversion["date"]);
     this.saveConversions(conversions);
+  }
+
+  exchangeHistory(fromCurrency, toCurrency, startDate, endDate) {
+    return new Observable((observer) => {
+      this.getRatesHistory(fromCurrency, startDate, endDate).subscribe(
+        (response: Array<any>) => {
+          if (toCurrency !== 'USD') {
+            this.getRatesHistory(toCurrency, startDate, endDate).subscribe(
+              (response2: Array<any>) => {
+                observer.next(this.processRates(response, response2));
+              },
+              (error) => {
+                observer.error(error);
+              }
+            )
+          } else {
+            observer.next(response);
+          }
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
+    });
+  }
+
+  getRatesHistory(fromCurrency, startDate, endDate) {
+    let params = new HttpParams();
+    params = params.append('key', this.apiKey);
+    params = params.append('currency', fromCurrency);
+    params = params.append('start', startDate);
+    params = params.append('end', endDate);
+    return this.http.get(this.host + this.exchangeRatesHistoryEndpoint, { params: params });
+  }
+
+  private processRates(ratesFromCurrency: Array<any>, ratesToCurrency: Array<any>):Array<any> {
+    return ratesFromCurrency.map((rateHistory) => {
+      let rateSameTime = ratesToCurrency.filter(r => (r["timestamp"] === rateHistory["timestamp"]));
+
+      return {
+        timestamp: rateHistory["timestamp"],
+        rate: (parseFloat(rateHistory["rate"]) * (1 / parseFloat(rateSameTime[0]["rate"])))
+      }
+    });
   }
 }

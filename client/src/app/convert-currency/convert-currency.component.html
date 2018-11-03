@@ -26,4 +26,52 @@
     <p>1 {{conversion.fromCurrency}} = {{conversion.rate}} {{conversion.toCurrency}}</p>
     <p>1 {{conversion.toCurrency}} = {{conversion.inverseRate}} {{conversion.fromCurrency}}</p>
   </div>
+
+  <mat-divider></mat-divider>
+
+  <h2>Exchange History</h2>
+
+  <mat-form-field>
+    <mat-select placeholder="Date Range" [(value)]="historyDateRangeSelected" (selectionChange)="loadConvertHistory()">
+      <mat-option *ngFor="let dateRange of historyDateRangeOptions" [value]="dateRange.value">
+        {{dateRange.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="flex">
+    <div class="flex-child">
+      <table mat-table [dataSource]="conversionHistory" class="mat-elevation-z8" *ngIf="conversionHistory">
+        <ng-container matColumnDef="timestamp">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.timestamp | date: 'short'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rate">
+          <th mat-header-cell *matHeaderCellDef> Exchange Rate </th>
+          <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="exchangeHistoryColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: exchangeHistoryColumns;"></tr>
+      </table>
+    </div>
+
+    <div class="flex-child">
+      <table mat-table [dataSource]="statistics" class="mat-elevation-z8" *ngIf="statistics">
+        <ng-container matColumnDef="statistics">
+          <th mat-header-cell *matHeaderCellDef> Statistics </th>
+          <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="values">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="statisticsColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: statisticsColumns;"></tr>
+      </table>
+    </div>
+  </div>
 </div>

@@ -10,6 +10,8 @@ import { MatToolbarModule,
          MatTabsModule,
          MatTableModule,
          MatProgressSpinnerModule,
+         MatDividerModule,
+         MatSelectModule,
          MatIconModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -43,6 +45,8 @@ import { ConversionHistoryComponent } from './conversion-history/conversion-hist
     MatTabsModule,
     MatTableModule,
     MatProgressSpinnerModule,
+    MatDividerModule,
+    MatSelectModule,
     MatIconModule
   ],
   providers: [AuthService, ConvertService, CookieService],
