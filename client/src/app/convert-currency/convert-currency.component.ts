@@ -63,7 +63,7 @@ export class ConvertCurrencyComponent implements OnInit {
     let toDate = moment().utc().startOf('day').format();
 
     this.convertService.exchangeHistory(this.fromCurrency, this.toCurrency, fromDate, toDate).subscribe(
-      (conversionHistory) => {
+      (conversionHistory: Array<any>) => {
         this.conversionHistory = conversionHistory;
         this.setStatistics(this.conversionHistory.map(conversion => conversion.rate));
       }
