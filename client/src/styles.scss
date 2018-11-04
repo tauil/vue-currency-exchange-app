@@ -1,9 +1,70 @@
-/* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import 'custom-theme.css';
+
+$primary: #009688;
+$accent: #94C720;
+$warn: #C70D38;
 
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  background: #eee;
+  color: #404040;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+#logo {
+  color: #414141;
+
+  strong {
+    color: #606060;
+  }
+
+  img {
+    vertical-align: middle;
+  }
+}
+
+.mat-raised-button, .mat-button {
+  &.text-color-primary {
+    color: $primary;
+  }
+
+  &.text-color-warn {
+    color: $warn;
+  }
+}
+
+.mat-toolbar {
+  color: #404040;
+  background: #fff;
+
+  mat-toolbar-row {
+    padding: 0;
+    justify-content: space-between;
+  }
+
+  .main-link {
+    line-height: 64px;
+    text-decoration: none;
+    color: #404040;
+    padding: 0 1em;
+    text-transform: uppercase;
+    font-size: 16px;
+
+    &.active {
+      border-bottom: 2px solid $primary;
+      font-weight: bold;
+    }
+  }
+}
+
+.main-container {
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 app-auth {
@@ -31,5 +92,56 @@ app-auth {
 
   .flex-child {
     flex: 1;
+
+    &.bigger {
+      flex: 2;
+    }
+
+    &.margin-right {
+      margin-right: .5em;
+    }
+
+    &.margin-left {
+      margin-left: .5em;
+    }
   }
+}
+
+table.full-size {
+  width: 99%;
+}
+
+#amount-field {
+  margin: 0 1em 0 0;
+}
+
+#invert-currencies-button {
+  margin: 0 1em;
+}
+
+#convert-button {
+  margin: 0 0 0 1em;
+}
+
+#conversion-result {
+  text-align: center;
+  margin: 0 0 3em;
+  min-height: 7em;
+
+  mat-spinner {
+    margin: 2em auto 0;
+  }
+}
+
+#main-result {
+  font-size: 48px;
+  margin: .5em 0;
+}
+
+.conversion-summary {
+  margin: 0;
+}
+
+.highlight-text {
+  color: $accent;
 }

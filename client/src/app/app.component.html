@@ -1,11 +1,12 @@
-<mat-toolbar color="primary" *ngIf="authService.isAuthenticated()">
-  <mat-toolbar-row>
-    <span>CurrencyExchange</span>
-    <span class="example-spacer"></span>
-    <a routerLink="/convert" routerLinkActive="active">Currency Converter</a>
-    <a routerLink="/history">View Conversion History</a>
-    <span class="example-spacer"></span>
-    <button mat-button (click)="logout()">Logout</button>
+<mat-toolbar class="mat-elevation-z1">
+  <mat-toolbar-row class="main-container">
+    <span id="logo"><img src="/assets/logo.png"/>Currency<strong>Exchange</strong></span>
+    <ng-container *ngIf="authService.isAuthenticated()">
+      <a routerLink="/convert" routerLinkActive="active" class="main-link">Currency Converter</a>
+      <a routerLink="/history" routerLinkActive="active" class="main-link">View Conversion History</a>
+      <span class="example-spacer"></span>
+      <button mat-button (click)="logout()" class="text-color-primary">Logout</button>
+    </ng-container>
   </mat-toolbar-row>
 </mat-toolbar>
 

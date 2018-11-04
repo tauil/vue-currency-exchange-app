@@ -15,7 +15,6 @@ export class AuthComponent implements OnInit {
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.authService.isAuthenticated());
     if (this.authService.isAuthenticated())
       this.router.navigate(['/convert']);
   }
