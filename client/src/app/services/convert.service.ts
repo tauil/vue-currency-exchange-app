@@ -88,7 +88,12 @@ export class ConvertService {
               }
             )
           } else {
-            observer.next(response);
+            observer.next(response.map(conversion => {
+              return {
+                timestamp: conversion["timestamp"],
+                rate: parseFloat(conversion["rate"])
+              }
+            }));
           }
         },
         (error) => {

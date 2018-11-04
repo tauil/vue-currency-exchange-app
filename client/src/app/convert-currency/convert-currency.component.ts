@@ -37,6 +37,10 @@ export class ConvertCurrencyComponent implements OnInit {
     });
   }
 
+  formInvalid() {
+    return (!this.initialAmount || !this.fromCurrency || !this.toCurrency);
+  }
+
   invertCurrencies() {
     let fromCurrency = this.fromCurrency;
     this.fromCurrency = this.toCurrency;
@@ -45,15 +49,12 @@ export class ConvertCurrencyComponent implements OnInit {
 
   convert() {
     this.isLoading = true;
-    const myObserver = {
-      next: result => {
-        this.conversion = result;
+    this.convertService.convert(this.initialAmount, this.fromCurrency, this.toCurrency).subscribe(
+      conversions => {
+        this.conversion = conversions;
         this.isLoading = false;
-      },
-      error: err => console.error('Observer got an error: ' + err),
-      complete: () => console.log('Observer got a complete notification'),
-    };
-    this.convertService.convert(this.initialAmount, this.fromCurrency, this.toCurrency).subscribe(myObserver);
+      }
+    );
     this.loadConvertHistory();
   }
 
@@ -64,17 +65,24 @@ export class ConvertCurrencyComponent implements OnInit {
     this.convertService.exchangeHistory(this.fromCurrency, this.toCurrency, fromDate, toDate).subscribe(
       (conversionHistory) => {
         this.conversionHistory = conversionHistory;
-        let rates = this.conversionHistory.map(conversion => conversion.rate);
-        let max = Math.max.apply(Math, rates);
-        let min = Math.min.apply(Math, rates);
-        let average = rates.reduce((a, b) => a + b, 0) / (rates.length);
-        this.statistics = [
-          { label: 'Lowest', value: min },
-          { label: 'Highest', value: max },
-          { label: 'Average', value: average }
-        ];
+        this.setStatistics(this.conversionHistory.map(conversion => conversion.rate));
       }
     );
+  }
+
+  setStatistics(rates) {
+    let max = Math.max.apply(Math, rates);
+    let min = Math.min.apply(Math, rates);
+    let average = rates.reduce((a, b) => a + b, 0) / (rates.length);
+    this.statistics = [
+      { label: 'Lowest', value: min },
+      { label: 'Highest', value: max },
+      { label: 'Average', value: average }
+    ];
+  }
+
+  forceUppercase(event, attribute) {
+    this[attribute] = event.target.value.toUpperCase();
   }
 
 }
